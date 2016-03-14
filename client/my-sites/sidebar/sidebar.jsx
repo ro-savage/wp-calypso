@@ -37,6 +37,11 @@ module.exports = React.createClass( {
 		window.scrollTo( 0, 0 );
 	},
 
+	onCustomize: function( event ) {
+		event.preventDefault();
+		this.props.layoutFocus.set( 'preview' );
+	},
+
 	itemLinkClass: function( paths, existingClasses ) {
 		var classSet = {};
 
@@ -174,6 +179,7 @@ module.exports = React.createClass( {
 				link={ themesLink }
 				buttonLink={ getCustomizeUrl( null, site ) }
 				buttonLabel={ this.translate( 'Customize' ) }
+				onButtonClick={ this.onCustomize }
 				onNavigate={ this.onNavigate }
 				icon={ 'themes' }
 				preloadSectionName="themes" />
