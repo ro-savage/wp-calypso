@@ -14,6 +14,7 @@ var protectForm = require( 'lib/mixins/protect-form' ),
 	MenuItemList = require( './menu-item-list' ),
 	MenuDeleteButton = require ( './menu-delete-button' ),
 	MenuSaveButton = require( './menus-save-button' ),
+	MenuRevertButton = require( './menus-revert-button' ),
 	analytics = require( 'analytics' );
 
 /**
@@ -242,6 +243,7 @@ var Menu = React.createClass( {
 								selectedLocation={ this.props.selectedLocation }
 								setBusy={ this.props.setBusy }
 								confirmDiscard={ this.props.confirmDiscard } />
+						<MenuRevertButton menuData={ this.props.siteMenus } />
 						<MenuSaveButton menuData={ this.props.siteMenus }
 								selectedMenu={ this.props.selectedMenu } />
 					</div>
