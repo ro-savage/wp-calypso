@@ -258,6 +258,7 @@ function reduxStoreReady( reduxStore ) {
 		if ( config.isEnabled( 'guidestours' ) && context.query.tour ) {
 			context.store.dispatch( showGuidesTour( {
 				shouldShow: true,
+				shouldDelay: /^\/checkout/.test( path ),
 				tour: context.query.tour,
 			} ) );
 		}

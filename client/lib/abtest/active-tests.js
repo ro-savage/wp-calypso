@@ -89,4 +89,12 @@ module.exports = {
 		},
 		defaultVariation: 'original'
 	},
+	guidedTours: {
+		datestamp: '20160329',
+		variations: {
+			original: 98,
+			guided: 2,
+		},
+		defaultVariation: 'original'
+	},
 };

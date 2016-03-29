@@ -96,12 +96,11 @@ const Signup = React.createClass( {
 
 				if ( timeSinceLoading && timeSinceLoading < MINIMUM_TIME_LOADING_SCREEN_IS_DISPLAYED ) {
 					return delay(
-						this.handleFlowComplete.bind( this, dependencies, destination ),
+						this.handleFlowComplete.bind( this, dependencies, utils.getDestination( destination, dependencies ) ),
 						MINIMUM_TIME_LOADING_SCREEN_IS_DISPLAYED - timeSinceLoading
 					);
 				}
-
-				return this.handleFlowComplete( dependencies, destination );
+				return this.handleFlowComplete( dependencies, utils.getDestination( destination, dependencies ) );
 			}.bind( this )
 		} );
 

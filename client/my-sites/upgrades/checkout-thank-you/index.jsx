@@ -3,6 +3,7 @@
  */
 import classNames from 'classnames';
 import { connect } from 'react-redux';
+import defer from 'lodash/defer';
 import find from 'lodash/find';
 import page from 'page';
 import React from 'react';
@@ -49,6 +50,7 @@ import PurchaseDetail from 'components/purchase-detail';
 import { getFeatureByKey, shouldFetchSitePlans } from 'lib/plans';
 import SiteRedirectDetails from './site-redirect-details';
 import upgradesPaths from 'my-sites/upgrades/paths';
+import { showGuidesTour } from 'state/ui/actions';
 
 function getPurchases( props ) {
 	return props.receipt.data.purchases;
@@ -73,6 +75,7 @@ const CheckoutThankYou = React.createClass( {
 
 	componentDidMount() {
 		this.redirectIfThemePurchased();
+		defer( () => this.props.undelayGuidesTour() );
 
 		if ( this.props.receipt.hasLoadedFromServer && this.hasPlanOrDomainProduct() ) {
 			this.props.refreshSitePlans( this.props.selectedSite );
@@ -282,6 +285,9 @@ export default connect(
 			},
 			refreshSitePlans( site ) {
 				dispatch( refreshSitePlans( site.ID ) );
+			},
+			undelayGuidesTour() {
+				dispatch( showGuidesTour( { shouldDelay: false } ) );
 			}
 		};
 	}

@@ -190,7 +190,7 @@ export default connect(
 			isSupportUser: state.support.isSupportUser,
 			section,
 			isOffline: isOffline( state ),
-			shouldShowGuidesTour: guidesTour.shouldShow,
+			shouldShowGuidesTour: guidesTour.willShow,
 		};
 	}
 )( Layout );
