@@ -5,6 +5,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import assign from 'lodash/assign';
+import page from 'page';
 
 /**
  * Internal dependencies
@@ -109,6 +110,8 @@ const DesignMenu = React.createClass( {
 	},
 
 	closeDesignMenu() {
+		const siteSlug = this.props.selectedSite.URL.replace( /^https?:\/\//, '' );
+		page( `/stats/${siteSlug}` );
 		// TODO: go where?
 	},
 
