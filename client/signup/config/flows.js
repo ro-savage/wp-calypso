@@ -14,6 +14,7 @@ import { getLocaleSlug } from 'lib/i18n-utils';
 import plansPaths from 'my-sites/plans/paths';
 import stepConfig from './steps';
 import userFactory from 'lib/user';
+import { getABTestVariation } from 'lib/abtest';
 
 const user = userFactory();
 
@@ -205,10 +206,10 @@ const flows = {
 	},
 
 	layout: {
-		steps: [ 'design-type', 'themes', 'domains', 'plans', 'user' ],
+		steps: [ 'survey', 'design-type', 'themes-headstart', 'domains-with-theme', 'plans', 'survey-user' ],
 		destination: getSiteDestination,
-		description: 'Theme trifurcation flow',
-		lastModified: '2015-12-14'
+		description: 'Signup flow with homepage pattern selection (Triforce) step',
+		lastModified: '2016-04-05'
 	},
 
 	developer: {
@@ -263,7 +264,12 @@ function filterFlowName( flowName ) {
 
 	// Headstarted "default" flow (`newsite`) with vertical selection for EN users, coming from the homepage single button.
 	if ( 'website' === flowName && ( 'en' === locale || 'en-gb' === locale ) ) {
-		return ( 'verticalThemes' === abtest( 'verticalThemes' ) ) ? 'new-vertical-site' : 'newsite';
+		flowName = ( 'verticalThemes' === abtest( 'verticalThemes' ) ) ? 'new-vertical-site' : 'newsite';
+	}
+
+	// Triforce test enabled for EN users coming from the homepage single button.
+	if ( 'newsite' === flowName && 'notTested' === getABTestVariation( 'verticalThemes' ) && 'triforce' === abtest( 'triforce' ) ) {
+		return 'layout';
 	}
 
 	return flowName;

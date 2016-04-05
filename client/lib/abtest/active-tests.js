@@ -105,4 +105,13 @@ module.exports = {
 		},
 		defaultVariation: 'original'
 	},
+	triforce: {
+		datestamp: '20160405',
+		variations: {
+			original: 30,
+			triforce: 30,
+			notTested: 40
+		},
+		defaultVariation: 'original'
+	}
 };
