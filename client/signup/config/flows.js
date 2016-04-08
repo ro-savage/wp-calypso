@@ -11,6 +11,7 @@ import reject from 'lodash/reject';
 import { abtest } from 'lib/abtest';
 import config from 'config';
 import { getLocaleSlug } from 'lib/i18n-utils';
+import { isOutsideCalypso } from 'lib/url';
 import plansPaths from 'my-sites/plans/paths';
 import stepConfig from './steps';
 import userFactory from 'lib/user';
@@ -272,12 +273,16 @@ function filterFlowName( flowName ) {
 function filterDestination( destination, dependencies ) {
 	if ( abtest( 'guidedTours' === 'guided' ) ) {
 		const tourName = 'main';
+		//TODO: Build the query arg properly, so we don't have problems with destinations
+		// that already have query strings in
 
 		if ( dependenciesContainCartItem( dependencies ) ) {
 			return getCheckoutUrl( dependencies ) + `?tour=${ tourName }`;
 		}
 
-		return `/posts/${ dependencies.siteSlug }/?tour=${ tourName }`;
+		return isOutsideCalypso( destination )
+			? `/stats/${ dependencies.siteSlug }?tour=${ tourName }`
+			: `${ destination }?tour=${ tourName }`;
 	}
 
 	return destination;
