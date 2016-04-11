@@ -273,12 +273,8 @@ function filterFlowName( flowName ) {
 function filterDestination( destination, dependencies ) {
 	if ( abtest( 'guidedTours' === 'guided' ) ) {
 		const tourName = 'main';
-		//TODO: Build the query arg properly, so we don't have problems with destinations
-		// that already have query strings in
-
-		if ( dependenciesContainCartItem( dependencies ) ) {
-			return getCheckoutUrl( dependencies ) + `?tour=${ tourName }`;
-		}
+		//TODO: Build the query arg properly, so we don't have problems with
+		// destinations that already have query strings in
 
 		return isOutsideCalypso( destination )
 			? `/stats/${ dependencies.siteSlug }?tour=${ tourName }`
