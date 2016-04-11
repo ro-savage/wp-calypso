@@ -119,8 +119,8 @@ function mergeFormWithValue( { form, fieldName, fieldValue} ) {
 	return form;
 }
 
-function getDestination( destination, dependencies ) {
-	return flows.filterDestination( destination, dependencies );
+function getDestination( destination, dependencies, flowName ) {
+	return flows.filterDestination( destination, dependencies, flowName );
 }
 
 module.exports = {

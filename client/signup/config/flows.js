@@ -270,8 +270,14 @@ function filterFlowName( flowName ) {
 	return flowName;
 }
 
-function filterDestination( destination, dependencies ) {
+function filterDestination( destination, dependencies, flowName ) {
 	if ( abtest( 'guidedTours' === 'guided' ) ) {
+		const disabledForFlows = [ 'account', 'site-user' ];
+
+		if ( includes( disabledForFlows, flowName ) ) {
+			return destination;
+		}
+
 		const tourName = 'main';
 		//TODO: Build the query arg properly, so we don't have problems with
 		// destinations that already have query strings in
