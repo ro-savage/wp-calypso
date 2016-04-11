@@ -7,6 +7,8 @@ import assign from 'lodash/assign';
  * Internal dependencies
  */
 import * as ActionTypes from 'state/action-types';
+import { previewSchema } from './schema';
+import { isValidStateWithSchema } from 'state/utils';
 
 const initialState = {};
 
@@ -52,6 +54,13 @@ export default function( newState = initialState, action ) {
 		case ActionTypes.PREVIEW_CUSTOMIZATIONS_UNDO:
 		case ActionTypes.PREVIEW_CUSTOMIZATIONS_SAVED:
 			return assign( {}, state, { [ action.siteId ]: siteReducer( state[ action.siteId ], action ) } );
+		case ActionTypes.SERIALIZE:
+			return state;
+		case ActionTypes.DESERIALIZE:
+			if ( isValidStateWithSchema( state, previewSchema ) ) {
+				return state;
+			}
+			return initialState;
 	}
 	return state;
 }
