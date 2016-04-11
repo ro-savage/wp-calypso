@@ -14,6 +14,7 @@ import {
 	READER_LIST_REQUEST,
 	READER_LIST_REQUEST_SUCCESS,
 	READER_LIST_REQUEST_FAILURE,
+	READER_LIST_UPDATE_SUCCESS,
 	READER_LISTS_RECEIVE,
 	READER_LISTS_REQUEST,
 	READER_LISTS_REQUEST_SUCCESS,
@@ -37,6 +38,7 @@ export function items( state = {}, action ) {
 		case READER_LISTS_RECEIVE:
 			return Object.assign( {}, state, keyBy( action.lists, 'ID' ) );
 		case READER_LIST_REQUEST_SUCCESS:
+		case READER_LIST_UPDATE_SUCCESS:
 			return Object.assign( {}, state, keyBy( [ action.data.list ], 'ID' ) );
 		case SERIALIZE:
 			return state;

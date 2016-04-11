@@ -2,6 +2,8 @@
 import React from 'react';
 import LinkedStateMixin from 'react-addons-linked-state-mixin';
 import debugModule from 'debug';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
 // Internal dependencies
 import Card from 'components/card';
@@ -73,7 +75,7 @@ const ListManagementDescriptionEdit = React.createClass( {
 			description: this.state.description
 		};
 
-		updateListDetails( params );
+		this.props.updateListDetails( params );
 	},
 
 	handleDismissNotice() {
@@ -132,4 +134,13 @@ const ListManagementDescriptionEdit = React.createClass( {
 	}
 } );
 
-export default ListManagementDescriptionEdit;
+export default connect(
+	( state ) => {
+		return {};
+	},
+	( dispatch ) => {
+		return bindActionCreators( {
+			updateListDetails
+		}, dispatch );
+	}
+)( ListManagementDescriptionEdit );
