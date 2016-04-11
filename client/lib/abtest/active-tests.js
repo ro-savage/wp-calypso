@@ -95,6 +95,7 @@ module.exports = {
 			original: 98,
 			guided: 2,
 		},
-		defaultVariation: 'original'
+		defaultVariation: 'original',
+		allowExistingUsers: true,
 	},
 };
