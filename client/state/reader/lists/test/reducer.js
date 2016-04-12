@@ -8,10 +8,13 @@ import deepFreeze from 'deep-freeze';
  * Internal dependencies
  */
 import {
-	READER_LISTS_RECEIVE
+	READER_LISTS_RECEIVE,
+	READER_LIST_UPDATE_SUCCESS
 } from 'state/action-types';
+
 import {
-	items
+	items,
+	updatedLists
 } from '../reducer';
 
 describe( 'reducer', () => {
@@ -49,6 +52,27 @@ describe( 'reducer', () => {
 				841: { ID: 841, title: 'Hello World' },
 				413: { ID: 413, title: 'Mangos and feijoas' }
 			} );
+		} );
+	} );
+
+	describe( '#updatedLists()', () => {
+		it( 'should default to an empty array', () => {
+			const state = updatedLists( undefined, {} );
+			expect( state ).to.eql( [] );
+		} );
+
+		it( 'should add a list ID when a list is updated', () => {
+			const state = updatedLists( null, {
+				type: READER_LIST_UPDATE_SUCCESS,
+				data: {
+					list: {
+						ID: 841,
+						title: 'Hello World'
+					}
+				}
+			} );
+
+			expect( state ).to.eql( [ 841 ] );
 		} );
 	} );
 } );

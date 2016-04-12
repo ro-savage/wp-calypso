@@ -10,6 +10,7 @@ import {
 	isRequestingList,
 	isRequestingSubscribedLists,
 	getSubscribedLists,
+	isUpdatedList,
 	getListByOwnerAndSlug,
 	isSubscribedByOwnerAndSlug
 } from '../selectors';
@@ -109,6 +110,32 @@ describe( 'selectors', () => {
 				{ ID: 456, slug: 'ants'},
 				{ ID: 123, slug: 'bananas' }
 			] );
+		} );
+	} );
+
+	describe( '#isUpdatedList()', () => {
+		it( 'should return false if list has not been updated', () => {
+			const isUpdated = isUpdatedList( {
+				reader: {
+					lists: {
+						updatedLists: []
+					}
+				}
+			}, 123 );
+
+			expect( isUpdated ).to.be.false;
+		} );
+
+		it( 'should return true if the list has been updated', () => {
+			const isUpdated = isUpdatedList( {
+				reader: {
+					lists: {
+						updatedLists: [ 123, 456 ]
+					}
+				}
+			}, 123 );
+
+			expect( isUpdated ).to.be.true;
 		} );
 	} );
 

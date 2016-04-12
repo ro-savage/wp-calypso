@@ -50,6 +50,20 @@ export const getSubscribedLists = createSelector(
 );
 
 /**
+ * Returns true if the specified list has been marked as updated.
+ *
+ * @param  {Object}  state  Global state tree
+ * @param  {Integer}  listId  List ID
+ * @return {Boolean}        Whether lists are being requested
+ */
+export function isUpdatedList( state, listId ) {
+	if ( ! has( state, 'reader.lists.updatedLists' ) ) {
+		return false;
+	}
+	return includes( state.reader.lists.updatedLists, listId );
+}
+
+/**
  * Returns information about a single Reader list.
  *
  * @param  {Object}  state  Global state tree

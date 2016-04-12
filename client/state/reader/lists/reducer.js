@@ -6,6 +6,7 @@ import keyBy from 'lodash/keyBy';
 import map from 'lodash/map';
 import union from 'lodash/union';
 import filter from 'lodash/filter';
+import get from 'lodash/get';
 
 /**
  * Internal dependencies
@@ -23,7 +24,7 @@ import {
 	SERIALIZE,
 	DESERIALIZE,
 } from 'state/action-types';
-import { itemsSchema, subscriptionsSchema } from './schema';
+import { itemsSchema, subscriptionsSchema, updatedListsSchema } from './schema';
 import { isValidStateWithSchema } from 'state/utils';
 
 /**
@@ -79,6 +80,32 @@ export function subscribedLists( state = [], action ) {
 }
 
 /**
+ * Tracks which list IDs have been updated recently. Used to show the correct success message.
+ *
+ * @param  {Object} state  Current state
+ * @param  {Object} action Action payload
+ * @return {Object}        Updated state
+ */
+export function updatedLists( state = [], action ) {
+	switch ( action.type ) {
+		case READER_LIST_UPDATE_SUCCESS:
+			const newListId = get( action, 'data.list.ID' );
+			if ( ! newListId ) {
+				return state;
+			}
+			return union( state, [ newListId ] );
+		case SERIALIZE:
+			return state;
+		case DESERIALIZE:
+			if ( ! isValidStateWithSchema( state, updatedListsSchema ) ) {
+				return [];
+			}
+			return state;
+	}
+	return state;
+}
+
+/**
  * Returns the updated requests state after an action has been dispatched.
  *
  * @param  {Object} state  Current state
@@ -125,6 +152,7 @@ export function isRequestingLists( state = false, action ) {
 export default combineReducers( {
 	items,
 	subscribedLists,
+	updatedLists,
 	isRequestingList,
 	isRequestingLists
 } );
