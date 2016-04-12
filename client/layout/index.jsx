@@ -35,6 +35,7 @@ var MasterbarLoggedIn = require( 'layout/masterbar/logged-in' ),
 	SupportUser;
 
 import { isOffline } from 'state/application/selectors';
+import DesignPreview from 'my-sites/design-preview';
 
 if ( config.isEnabled( 'keyboard-shortcuts' ) ) {
 	KeyboardShortcutsMenu = require( 'lib/keyboard-shortcuts/menu' );
@@ -143,6 +144,17 @@ Layout = React.createClass( {
 		);
 	},
 
+	renderPreview() {
+		if ( config.isEnabled( 'preview-layout' ) && this.props.section.group === 'sites' ) {
+			return (
+				<DesignPreview
+					className="layout__preview"
+					showPreview={ this.props.focus.getCurrent() === 'preview' }
+				/>
+			);
+		}
+	},
+
 	render: function() {
 		var sectionClass = classnames(
 				'wp',
@@ -177,6 +189,7 @@ Layout = React.createClass( {
 				<TranslatorLauncher
 					isEnabled={ translator.isEnabled() }
 					isActive={ translator.isActivated() }/>
+				{ this.renderPreview() }
 			</div>
 		);
 	}
