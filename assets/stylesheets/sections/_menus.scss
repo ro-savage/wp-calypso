@@ -242,6 +242,18 @@
 }
 
 
+.is-editing-title {
+	@include breakpoint( "<480px" ) {
+		.menus__menu-name {
+			line-height: 41px;
+		}
+
+		.menus__menu-actions {
+			display: none;
+		}
+	}
+}
+
 /**
  * Menu: List
  */
