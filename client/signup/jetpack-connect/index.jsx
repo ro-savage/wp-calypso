@@ -17,9 +17,12 @@ import Main from 'components/main';
 import JetpackConnectNotices from './jetpack-connect-notices';
 import SiteURLInput from './site-url-input';
 import { dismissUrl, goToRemoteAuth, goToPluginInstall, checkUrl } from 'state/jetpack-connect/actions';
+import versionCompare from 'lib/version-compare';
 
 const JetpackConnectMain = React.createClass( {
 	displayName: 'JetpackConnectSiteURLStep',
+
+	MINIMUM_JETPACK_VERSION: '4.0',
 
 	getInitialState() {
 		return {
@@ -120,6 +123,10 @@ const JetpackConnectMain = React.createClass( {
 		if ( ! this.checkProperty( 'hasJetpack' ) ) {
 			return 'notJetpack';
 		}
+		const jetpackVersion = this.checkProperty( 'jetpackVersion' );
+		if ( jetpackVersion && versionCompare( jetpackVersion, this.MINIMUM_JETPACK_VERSION, '<' ) ) {
+			return 'outdatedJetpack';
+		}
 		if ( ! this.checkProperty( 'isJetpackActive' ) ) {
 			return 'notActiveJetpack';
 		}
@@ -154,7 +161,6 @@ const JetpackConnectMain = React.createClass( {
 	},
 
 	render() {
-		window.bbb = this;
 		const status = this.getStatus();
 		return (
 			<Main className="jetpack-connect">
