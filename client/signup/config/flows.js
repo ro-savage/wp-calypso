@@ -271,7 +271,7 @@ function filterFlowName( flowName ) {
 }
 
 function filterDestination( destination, dependencies, flowName ) {
-	if ( abtest( 'guidedTours' === 'guided' ) ) {
+	if ( abtest( 'guidedTours' ) === 'guided' ) {
 		const disabledForFlows = [ 'account', 'site-user' ];
 
 		if ( includes( disabledForFlows, flowName ) ) {
