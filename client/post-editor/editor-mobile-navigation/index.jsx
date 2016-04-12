@@ -25,7 +25,8 @@ export default React.createClass( {
 		isPublishing: PropTypes.bool,
 		isSaveBlocked: PropTypes.bool,
 		hasContent: PropTypes.bool,
-		onClose: PropTypes.func
+		onClose: PropTypes.func,
+		onTabChange: PropTypes.func
 	},
 
 	getInitialState: function() {
@@ -38,6 +39,7 @@ export default React.createClass( {
 		if ( ! this.state.sidebarOpen ) {
 			layoutFocus.set( 'sidebar' );
 			this.setState( { sidebarOpen: true } );
+			this.props.onTabChange();
 		}
 	},
 
@@ -45,6 +47,7 @@ export default React.createClass( {
 		if ( this.state.sidebarOpen ) {
 			layoutFocus.set( 'content' );
 			this.setState( { sidebarOpen: false } );
+			this.props.onTabChange();
 		}
 	},
 
