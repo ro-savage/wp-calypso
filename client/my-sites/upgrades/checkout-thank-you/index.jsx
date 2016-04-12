@@ -74,8 +74,8 @@ const CheckoutThankYou = React.createClass( {
 	},
 
 	componentDidMount() {
-		this.redirectIfThemePurchased();
 		defer( () => this.props.undelayGuidesTour() );
+		this.redirectIfThemePurchased();
 
 		if ( this.props.receipt.hasLoadedFromServer && this.hasPlanOrDomainProduct() ) {
 			this.props.refreshSitePlans( this.props.selectedSite );
