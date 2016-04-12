@@ -132,8 +132,8 @@ sections = [
 	{
 		name: 'theme',
 		paths: [ '/theme' ],
-		module: 'my-sites/themes',
-		enableLoggedOut: config.isEnabled( 'manage/themes/logged-out' ),
+		module: 'my-sites/theme',
+		enableLoggedOut: true,
 		secondary: false,
 		group: 'sites',
 		isomorphic: true

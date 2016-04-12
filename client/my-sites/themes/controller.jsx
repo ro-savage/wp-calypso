@@ -1,4 +1,11 @@
 /**
+ * External Dependencies
+ */
+import React from 'react';
+import { Provider as ReduxProvider } from 'react-redux';
+import omit from 'lodash/omit';
+
+/**
  * Internal Dependencies
  */
 import SingleSiteComponent from 'my-sites/themes/single-site';
@@ -8,13 +15,21 @@ import analytics from 'analytics';
 import i18n from 'lib/mixins/i18n';
 import trackScrollPage from 'lib/track-scroll-page';
 import buildTitle from 'lib/screen-title/utils';
-import { getAnalyticsData } from '../helpers';
-import { makeElement } from './index.node.js';
+import { getAnalyticsData } from './helpers';
+import ClientSideEffects from 'components/client-side-effects';
 
-/**
- * Re-export
- */
-export { details } from './index.node.js';
+export function makeElement( ThemesComponent, Head, store, props ) {
+	return(
+		<ReduxProvider store={ store }>
+			<Head title={ props.title } tier={ props.tier || 'all' }>
+				<ThemesComponent { ...omit( props, [ 'title', 'runClientAnalytics' ] ) } />
+				<ClientSideEffects>
+					{ props.runClientAnalytics }
+				</ClientSideEffects>
+			</Head>
+		</ReduxProvider>
+	);
+};
 
 function getProps( context ) {
 	const { tier, site_id: siteId } = context.params;
