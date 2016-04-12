@@ -3,6 +3,7 @@
  */
 import wpcom from 'lib/wp';
 import {
+	READER_LIST_DISMISS_NOTICE,
 	READER_LIST_REQUEST,
 	READER_LIST_REQUEST_SUCCESS,
 	READER_LIST_REQUEST_FAILURE,
@@ -219,6 +220,21 @@ export function updateListDetails( list ) {
 					resolve();
 				}
 			} );
+		} );
+	};
+}
+
+/**
+ * Trigger an action to dismiss a list update notice.
+ *
+ * @param  {Integer}  listId List ID
+ * @return {Function} Action thunk
+ */
+export function dismissListNotice( listId ) {
+	return ( dispatch ) => {
+		dispatch( {
+			type: READER_LIST_DISMISS_NOTICE,
+			listId
 		} );
 	};
 }

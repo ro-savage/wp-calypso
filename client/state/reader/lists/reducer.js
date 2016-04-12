@@ -12,6 +12,7 @@ import get from 'lodash/get';
  * Internal dependencies
  */
 import {
+	READER_LIST_DISMISS_NOTICE,
 	READER_LIST_REQUEST,
 	READER_LIST_REQUEST_SUCCESS,
 	READER_LIST_REQUEST_FAILURE,
@@ -94,6 +95,11 @@ export function updatedLists( state = [], action ) {
 				return state;
 			}
 			return union( state, [ newListId ] );
+		case READER_LIST_DISMISS_NOTICE:
+			// Remove the dismissed list ID
+			return filter( state, ( listId ) => {
+				return listId !== action.listId;
+			} );
 		case SERIALIZE:
 			return state;
 		case DESERIALIZE:

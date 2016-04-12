@@ -9,6 +9,7 @@ import { expect } from 'chai';
  * Internal dependencies
  */
 import {
+	READER_LIST_DISMISS_NOTICE,
 	READER_LIST_REQUEST,
 	READER_LIST_UPDATE,
 	READER_LISTS_RECEIVE,
@@ -16,13 +17,15 @@ import {
 	READER_LISTS_FOLLOW,
 	READER_LISTS_UNFOLLOW
 } from 'state/action-types';
+
 import {
 	receiveLists,
 	requestList,
 	requestSubscribedLists,
 	followList,
 	unfollowList,
-	updateListDetails
+	updateListDetails,
+	dismissListNotice
 } from '../actions';
 
 describe( 'actions', () => {
@@ -158,6 +161,18 @@ describe( 'actions', () => {
 			expect( spy ).to.have.been.calledWith( {
 				type: READER_LIST_UPDATE,
 				list
+			} );
+		} );
+	} );
+
+	describe( '#dismissListNotice()', () => {
+		it( 'should dispatch the dismiss action', () => {
+			const listId = 123;
+			dismissListNotice( listId )( spy );
+
+			expect( spy ).to.have.been.calledWith( {
+				type: READER_LIST_DISMISS_NOTICE,
+				listId: 123
 			} );
 		} );
 	} );

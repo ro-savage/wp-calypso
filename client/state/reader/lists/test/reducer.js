@@ -9,7 +9,8 @@ import deepFreeze from 'deep-freeze';
  */
 import {
 	READER_LISTS_RECEIVE,
-	READER_LIST_UPDATE_SUCCESS
+	READER_LIST_UPDATE_SUCCESS,
+	READER_LIST_DISMISS_NOTICE
 } from 'state/action-types';
 
 import {
@@ -73,6 +74,27 @@ describe( 'reducer', () => {
 			} );
 
 			expect( state ).to.eql( [ 841 ] );
+		} );
+
+		it( 'should remove a list ID when a notice is dismissed', () => {
+			let state = updatedLists( null, {
+				type: READER_LIST_UPDATE_SUCCESS,
+				data: {
+					list: {
+						ID: 841,
+						title: 'Hello World'
+					}
+				}
+			} );
+
+			expect( state ).to.eql( [ 841 ] );
+
+			state = updatedLists( null, {
+				type: READER_LIST_DISMISS_NOTICE,
+				listId: 841
+			} );
+
+			expect( state ).to.eql( [] );
 		} );
 	} );
 } );

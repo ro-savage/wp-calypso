@@ -14,11 +14,10 @@ import FormTextarea from 'components/forms/form-textarea';
 import FormInputValidation from 'components/forms/form-input-validation';
 import FormButton from 'components/forms/form-button';
 import FormButtonsBar from 'components/forms/form-buttons-bar';
-import ReaderListsActions from 'lib/reader-lists/actions';
 import ReaderListsStore from 'lib/reader-lists/lists';
 import smartSetState from 'lib/react-smart-set-state';
 import Notice from 'components/notice';
-import { updateListDetails } from 'state/reader/lists/actions';
+import { updateListDetails, dismissListNotice } from 'state/reader/lists/actions';
 import { isUpdatedList } from 'state/reader/lists/selectors';
 
 const debug = debugModule( 'calypso:reader:list-management' );
@@ -57,6 +56,10 @@ const ListManagementDescriptionEdit = React.createClass( {
 
 	componentWillReceiveProps( nextProps ) {
 		this.smartSetState( this.getStateFromStores( nextProps ) );
+
+		if ( nextProps.list.ID !== this.props.list.ID ) {
+			this.handleDismissNotice();
+		}
 	},
 
 	componentWillUnmount() {
@@ -64,9 +67,7 @@ const ListManagementDescriptionEdit = React.createClass( {
 	},
 
 	handleFormSubmit() {
-		ReaderListsActions.dismissNotice(
-			this.props.list.ID
-		);
+		this.handleDismissNotice();
 
 		const params = {
 			ID: this.props.list.ID,
@@ -80,9 +81,7 @@ const ListManagementDescriptionEdit = React.createClass( {
 	},
 
 	handleDismissNotice() {
-		ReaderListsActions.dismissNotice(
-			this.props.list.ID
-		);
+		this.props.dismissListNotice( this.props.list.ID );
 	},
 
 	render() {
@@ -143,7 +142,8 @@ export default connect(
 	},
 	( dispatch ) => {
 		return bindActionCreators( {
-			updateListDetails
+			updateListDetails,
+			dismissListNotice
 		}, dispatch );
 	}
 )( ListManagementDescriptionEdit );
