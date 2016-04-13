@@ -196,6 +196,10 @@ export function updateListDetails( list ) {
 		throw new Error( 'List owner, slug and title are required' );
 	}
 
+	const preparedOwner = decodeURIComponent( list.owner );
+	const preparedSlug = decodeURIComponent( list.slug );
+	const preparedList = Object.assign( list, { owner: preparedOwner, slug: preparedSlug } );
+
 	return ( dispatch ) => {
 		dispatch( {
 			type: READER_LIST_UPDATE,
@@ -203,7 +207,7 @@ export function updateListDetails( list ) {
 		} );
 
 		return new Promise( ( resolve, reject ) => {
-			wpcom.undocumented().readListsUpdate( list, ( error, data ) => {
+			wpcom.undocumented().readListsUpdate( preparedList, ( error, data ) => {
 				if ( error ) {
 					dispatch( {
 						type: READER_LIST_UPDATE_FAILURE,
