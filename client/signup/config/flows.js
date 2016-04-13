@@ -85,7 +85,7 @@ const flows = {
 	},
 
 	businessv2: {
-		steps: [ 'domains', 'user' ],
+		steps: [ 'domains-without-theme', 'user' ],
 		destination: function( dependencies ) {
 			return '/plans/select/business/' + dependencies.siteSlug;
 		},
@@ -94,7 +94,7 @@ const flows = {
 	},
 
 	premiumv2: {
-		steps: [ 'domains', 'user' ],
+		steps: [ 'domains-without-theme', 'user' ],
 		destination: function( dependencies ) {
 			return '/plans/select/premium/' + dependencies.siteSlug;
 		},
@@ -103,7 +103,7 @@ const flows = {
 	},
 
 	'with-theme': {
-		steps: [ 'domains', 'plans', 'user' ],
+		steps: [ 'domains-without-theme', 'plans', 'user' ],
 		destination: getSiteDestination,
 		description: 'Preselect a theme to activate/buy from an external source',
 		lastModified: '2016-01-27'
@@ -132,7 +132,7 @@ const flows = {
 	},
 
 	newsite: {
-		steps: [ 'survey', 'themes-headstart', 'domains-with-theme', 'plans', 'survey-user' ],
+		steps: [ 'survey', 'themes', 'domains', 'plans', 'survey-user' ],
 		destination: getSiteDestination,
 		description: 'Headstarted flow with verticals for EN users clicking "Create Website" on the homepage.',
 		lastModified: '2016-03-21'
@@ -191,7 +191,7 @@ const flows = {
 	},
 
 	headstart: {
-		steps: [ 'themes-headstart', 'domains-with-theme', 'plans', 'user' ],
+		steps: [ 'themes', 'domains', 'plans', 'user' ],
 		destination: getSiteDestination,
 		description: 'Regular flow but with Headstart enabled to pre-populate site content',
 		lastModified: '2015-02-01'
@@ -231,7 +231,7 @@ const flows = {
 	},
 
 	'new-vertical-site': {
-		steps: [ 'survey', 'themes-headstart', 'domains-with-theme', 'plans', 'survey-user' ],
+		steps: [ 'survey', 'themes', 'domains', 'plans', 'survey-user' ],
 		destination: getSiteDestination,
 		description: 'Test flow showing Headstarted vertical themes for EN users clicking "Create Website" on the homepage.',
 		lastModified: '2016-03-22'
