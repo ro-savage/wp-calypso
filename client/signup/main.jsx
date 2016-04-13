@@ -90,17 +90,18 @@ const Signup = React.createClass( {
 		this.signupFlowController = new SignupFlowController( {
 			flowName: this.props.flowName,
 			onComplete: function( dependencies, destination ) {
-				var timeSinceLoading = this.state.loadingScreenStartTime ?
-					Date.now() - this.state.loadingScreenStartTime :
-					undefined;
+				const timeSinceLoading = this.state.loadingScreenStartTime
+					? Date.now() - this.state.loadingScreenStartTime
+					: undefined;
+				const filteredDestination = utils.getDestination( destination, dependencies, this.props.flowName );
 
 				if ( timeSinceLoading && timeSinceLoading < MINIMUM_TIME_LOADING_SCREEN_IS_DISPLAYED ) {
 					return delay(
-						this.handleFlowComplete.bind( this, dependencies, utils.getDestination( destination, dependencies, this.props.flowName ) ),
+						this.handleFlowComplete.bind( this, dependencies, filteredDestination ),
 						MINIMUM_TIME_LOADING_SCREEN_IS_DISPLAYED - timeSinceLoading
 					);
 				}
-				return this.handleFlowComplete( dependencies, utils.getDestination( destination, dependencies, this.props.flowName ) );
+				return this.handleFlowComplete( dependencies, filteredDestination );
 			}.bind( this )
 		} );
 
