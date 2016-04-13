@@ -200,7 +200,7 @@ export function updateListDetails( list ) {
 
 	const preparedOwner = decodeURIComponent( list.owner );
 	const preparedSlug = decodeURIComponent( list.slug );
-	const preparedList = Object.assign( list, { owner: preparedOwner, slug: preparedSlug } );
+	const preparedList = Object.assign( {}, list, { owner: preparedOwner, slug: preparedSlug } );
 
 	return ( dispatch ) => {
 		dispatch( {
