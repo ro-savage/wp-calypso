@@ -5,6 +5,6 @@ BASE_DIR := $(NODE_BIN)/../..
 NODE_PATH := $(BASE_DIR)/client
 
 test:
-	@NODE_ENV=test NODE_PATH=$(NODE_PATH) $(MOCHA) --compilers js:babel/register --reporter $(REPORTER)
+	@NODE_ENV=test NODE_PATH=$(NODE_PATH) $(MOCHA) --compilers js:babel-register --reporter $(REPORTER)
 
 .PHONY: test

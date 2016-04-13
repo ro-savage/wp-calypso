@@ -7,7 +7,7 @@ NODE_PATH := $(BASE_DIR)/client
 test:
 	@NODE_ENV=test \
 		NODE_PATH=$(NODE_PATH) $(MOCHA) \
-		--compilers jsx:babel/register,js:babel/register \
+		--compilers jsx:babel-register,js:babel-register \
 		--grep "$(filter-out $@,$(MAKECMDGOALS))" \
 		--reporter $(REPORTER)
 
