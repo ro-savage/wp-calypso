@@ -44,3 +44,13 @@ export function setHomePageSettings( site, isPageOnFront, pageOnFrontId, pageFor
 		} );
 	}
 }
+
+export function removeSiteLogo( site ) {
+	debug( 'removing logo image' );
+	// TODO: we need an endpoint for this
+}
+
+export function setSiteLogo( site, logoPostId, logoUrl ) {
+	debug( 'setting logo image', logoPostId, logoUrl );
+	// TODO: we need an endpoint for this
+}
