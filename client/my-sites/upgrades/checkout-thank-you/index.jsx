@@ -18,6 +18,7 @@ import Card from 'components/card';
 import ChargebackDetails from './chargeback-details';
 import CheckoutThankYouFeaturesHeader from './features-header';
 import CheckoutThankYouHeader from './header';
+import config from 'config';
 import DomainMappingDetails from './domain-mapping-details';
 import DomainRegistrationDetails from './domain-registration-details';
 import { fetchReceipt } from 'state/receipts/actions';
@@ -74,7 +75,7 @@ const CheckoutThankYou = React.createClass( {
 	},
 
 	componentDidMount() {
-		defer( () => this.props.undelayGuidesTour() );
+		config.isEnabled( 'guidestours' ) && defer( () => this.props.undelayGuidesTour() );
 		this.redirectIfThemePurchased();
 
 		if ( this.props.receipt.hasLoadedFromServer && this.hasPlanOrDomainProduct() ) {
