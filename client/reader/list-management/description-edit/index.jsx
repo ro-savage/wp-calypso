@@ -14,7 +14,6 @@ import FormTextarea from 'components/forms/form-textarea';
 import FormInputValidation from 'components/forms/form-input-validation';
 import FormButton from 'components/forms/form-button';
 import FormButtonsBar from 'components/forms/form-buttons-bar';
-import ReaderListsStore from 'lib/reader-lists/lists';
 import smartSetState from 'lib/react-smart-set-state';
 import Notice from 'components/notice';
 import { updateListDetails, dismissListNotice } from 'state/reader/lists/actions';
@@ -38,24 +37,22 @@ const ListManagementDescriptionEdit = React.createClass( {
 		return Object.assign( {
 			title: '',
 			description: '',
-		}, this.getStateFromStores( this.props ) );
+		}, this.getState( this.props ) );
 	},
 
-	getStateFromStores( props ) {
+	getState( props ) {
 		const list = props.list;
 		const currentState = {};
 		if ( list && list.ID ) {
 			currentState.ID = list.ID;
-			currentState.title = list.title,
+			currentState.title = list.title;
 			currentState.description = list.description;
-			currentState.lastListError = ReaderListsStore.getLastError(),
-			currentState.isUpdated = ReaderListsStore.isUpdated( list.ID );
 		}
 		return currentState;
 	},
 
 	componentWillReceiveProps( nextProps ) {
-		this.smartSetState( this.getStateFromStores( nextProps ) );
+		this.smartSetState( this.getState( nextProps ) );
 
 		if ( nextProps.list.ID !== this.props.list.ID ) {
 			this.handleDismissNotice();
@@ -97,8 +94,6 @@ const ListManagementDescriptionEdit = React.createClass( {
 		if ( this.props.hasError ) {
 			notice = <Notice status="is-error" text={ this.translate( 'Sorry, there was a problem saving your list details.' ) } onDismissClick={ this.handleDismissNotice } />;
 		}
-
-		debug( this.props );
 
 		const isTitleMissing = ! this.state.title || this.state.title.length < 1;
 
