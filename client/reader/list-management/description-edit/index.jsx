@@ -18,7 +18,7 @@ import ReaderListsStore from 'lib/reader-lists/lists';
 import smartSetState from 'lib/react-smart-set-state';
 import Notice from 'components/notice';
 import { updateListDetails, dismissListNotice } from 'state/reader/lists/actions';
-import { isUpdatedList } from 'state/reader/lists/selectors';
+import { isUpdatedList, hasError } from 'state/reader/lists/selectors';
 
 const debug = debugModule( 'calypso:reader:list-management' );
 
@@ -94,6 +94,12 @@ const ListManagementDescriptionEdit = React.createClass( {
 			notice = <Notice status="is-success" text={ this.translate( 'List details saved successfully.' ) } onDismissClick={ this.handleDismissNotice } />;
 		}
 
+		if ( this.props.hasError ) {
+			notice = <Notice status="is-error" text={ this.translate( 'Sorry, there was a problem saving your list details.' ) } onDismissClick={ this.handleDismissNotice } />;
+		}
+
+		debug( this.props );
+
 		const isTitleMissing = ! this.state.title || this.state.title.length < 1;
 
 		return (
@@ -137,7 +143,8 @@ const ListManagementDescriptionEdit = React.createClass( {
 export default connect(
 	( state, ownProps ) => {
 		return {
-			isUpdatedList: isUpdatedList( state, ownProps.list.ID )
+			isUpdatedList: isUpdatedList( state, ownProps.list.ID ),
+			hasError: hasError( state, ownProps.list.ID )
 		};
 	},
 	( dispatch ) => {

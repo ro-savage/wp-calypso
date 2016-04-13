@@ -12,7 +12,8 @@ import {
 	getSubscribedLists,
 	isUpdatedList,
 	getListByOwnerAndSlug,
-	isSubscribedByOwnerAndSlug
+	isSubscribedByOwnerAndSlug,
+	hasError
 } from '../selectors';
 
 describe( 'selectors', () => {
@@ -212,6 +213,32 @@ describe( 'selectors', () => {
 			}, 'restapitests', 'bananas' );
 
 			expect( isSubscribed ).to.eql( true );
+		} );
+	} );
+
+	describe( '#hasError()', () => {
+		it( 'should return false if there is no error for the list', () => {
+			const result = hasError( {
+				reader: {
+					lists: {
+						errors: { 123: 400 }
+					}
+				}
+			}, 456 );
+
+			expect( result ).to.be.false;
+		} );
+
+		it( 'should return true if the list has an error', () => {
+			const result = hasError( {
+				reader: {
+					lists: {
+						errors: { 123: 400 }
+					}
+				}
+			}, 123 );
+
+			expect( result ).to.be.true;
 		} );
 	} );
 } );

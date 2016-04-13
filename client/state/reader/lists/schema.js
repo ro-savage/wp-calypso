@@ -26,3 +26,7 @@ export const subscriptionsSchema = {
 export const updatedListsSchema = {
 	type: 'array'
 };
+
+export const errorsSchema = {
+	type: 'object'
+};

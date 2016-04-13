@@ -210,7 +210,8 @@ export function updateListDetails( list ) {
 						list,
 						error
 					} );
-					reject();
+					resolve();
+					//reject( error );
 				} else {
 					dispatch( {
 						type: READER_LIST_UPDATE_SUCCESS,

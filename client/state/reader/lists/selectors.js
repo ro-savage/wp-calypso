@@ -12,6 +12,8 @@ import has from 'lodash/has';
  */
 import createSelector from 'lib/create-selector';
 
+var debug = require( 'debug' )( 'calypso:redux' );
+
 /**
  * Returns true if currently requesting Reader lists, or
  * false otherwise.
@@ -61,6 +63,21 @@ export function isUpdatedList( state, listId ) {
 		return false;
 	}
 	return includes( state.reader.lists.updatedLists, listId );
+}
+
+/**
+ * Returns true if the specified list has an error recorded.
+ *
+ * @param  {Object}  state  Global state tree
+ * @param  {Integer}  listId  List ID
+ * @return {Boolean}        Whether list has an error
+ */
+export function hasError( state, listId ) {
+	if ( ! has( state, 'reader.lists.errors' ) ) {
+		return false;
+	}
+
+	return listId in state.reader.lists.errors;
 }
 
 /**

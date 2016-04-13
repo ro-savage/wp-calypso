@@ -7,6 +7,7 @@ import map from 'lodash/map';
 import union from 'lodash/union';
 import filter from 'lodash/filter';
 import get from 'lodash/get';
+import omit from 'lodash/omit';
 
 /**
  * Internal dependencies
@@ -17,6 +18,7 @@ import {
 	READER_LIST_REQUEST_SUCCESS,
 	READER_LIST_REQUEST_FAILURE,
 	READER_LIST_UPDATE_SUCCESS,
+	READER_LIST_UPDATE_FAILURE,
 	READER_LISTS_RECEIVE,
 	READER_LISTS_REQUEST,
 	READER_LISTS_REQUEST_SUCCESS,
@@ -25,8 +27,10 @@ import {
 	SERIALIZE,
 	DESERIALIZE,
 } from 'state/action-types';
-import { itemsSchema, subscriptionsSchema, updatedListsSchema } from './schema';
+import { itemsSchema, subscriptionsSchema, updatedListsSchema, errorsSchema } from './schema';
 import { isValidStateWithSchema } from 'state/utils';
+
+var debug = require( 'debug' )( 'calypso:redux' );
 
 /**
  * Tracks all known list objects, indexed by list ID.
@@ -155,10 +159,40 @@ export function isRequestingLists( state = false, action ) {
 	return state;
 }
 
+/**
+ * Returns errors received when trying to update lists, keyed by list ID.
+ *
+ * @param  {Object} state  Current state
+ * @param  {Object} action Action payload
+ * @return {Object}        Updated state
+ */
+export function errors( state = {}, action ) {
+	switch ( action.type ) {
+		case READER_LIST_UPDATE_FAILURE:
+			const newError = {};
+			newError[ action.list.ID ] = action.error.statusCode;
+			return Object.assign( {}, state, newError );
+
+		case READER_LIST_DISMISS_NOTICE:
+			// Remove the dismissed list ID
+			return omit( state, action.listId );
+
+		case SERIALIZE:
+		case DESERIALIZE:
+			if ( ! isValidStateWithSchema( state, errorsSchema ) ) {
+				return {};
+			}
+			return state;
+	}
+
+	return state;
+}
+
 export default combineReducers( {
 	items,
 	subscribedLists,
 	updatedLists,
 	isRequestingList,
-	isRequestingLists
+	isRequestingLists,
+	errors
 } );
