@@ -272,16 +272,15 @@ function filterFlowName( flowName ) {
 
 function filterDestination( destination, dependencies, flowName ) {
 	if ( abtest( 'guidedTours' ) === 'guided' ) {
-		const disabledForFlows = [ 'account', 'site-user' ];
+		const tourName = 'main';
+		const disabledFlows = [ 'account', 'site-user' ];
 
-		if ( includes( disabledForFlows, flowName ) ) {
+		if ( includes( disabledFlows, flowName ) ) {
 			return destination;
 		}
 
-		const tourName = 'main';
-		//TODO: Build the query arg properly, so we don't have problems with
+		// TODO(ehg): Build the query arg properly, so we don't have problems with
 		// destinations that already have query strings in
-
 		return isOutsideCalypso( destination )
 			? `/stats/${ dependencies.siteSlug }?tour=${ tourName }`
 			: `${ destination }?tour=${ tourName }`;
