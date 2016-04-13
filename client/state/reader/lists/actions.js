@@ -10,6 +10,8 @@ import {
 	READER_LIST_UPDATE,
 	READER_LIST_UPDATE_SUCCESS,
 	READER_LIST_UPDATE_FAILURE,
+	READER_LIST_UPDATE_TITLE,
+	READER_LIST_UPDATE_DESCRIPTION,
 	READER_LISTS_RECEIVE,
 	READER_LISTS_REQUEST,
 	READER_LISTS_REQUEST_SUCCESS,
@@ -214,8 +216,7 @@ export function updateListDetails( list ) {
 						list,
 						error
 					} );
-					resolve();
-					//reject( error );
+					reject( error );
 				} else {
 					dispatch( {
 						type: READER_LIST_UPDATE_SUCCESS,
@@ -240,6 +241,40 @@ export function dismissListNotice( listId ) {
 		dispatch( {
 			type: READER_LIST_DISMISS_NOTICE,
 			listId
+		} );
+	};
+}
+
+/**
+ * Trigger an action to update a list title.
+ *
+ * @param  {Integer}  listId List ID
+ * @param  {String}  newTitle List title
+ * @return {Function} Action thunk
+ */
+export function updateTitle( listId, newTitle ) {
+	return ( dispatch ) => {
+		dispatch( {
+			type: READER_LIST_UPDATE_TITLE,
+			listId,
+			title: newTitle
+		} );
+	};
+}
+
+/**
+ * Trigger an action to update a list description.
+ *
+ * @param  {Integer}  listId List ID
+ * @param  {String}  newDescription List description
+ * @return {Function} Action thunk
+ */
+export function updateDescription( listId, newDescription ) {
+	return ( dispatch ) => {
+		dispatch( {
+			type: READER_LIST_UPDATE_DESCRIPTION,
+			listId,
+			description: newDescription
 		} );
 	};
 }

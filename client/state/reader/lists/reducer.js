@@ -19,6 +19,8 @@ import {
 	READER_LIST_REQUEST_FAILURE,
 	READER_LIST_UPDATE_SUCCESS,
 	READER_LIST_UPDATE_FAILURE,
+	READER_LIST_UPDATE_TITLE,
+	READER_LIST_UPDATE_DESCRIPTION,
 	READER_LISTS_RECEIVE,
 	READER_LISTS_REQUEST,
 	READER_LISTS_REQUEST_SUCCESS,
@@ -29,8 +31,6 @@ import {
 } from 'state/action-types';
 import { itemsSchema, subscriptionsSchema, updatedListsSchema, errorsSchema } from './schema';
 import { isValidStateWithSchema } from 'state/utils';
-
-var debug = require( 'debug' )( 'calypso:redux' );
 
 /**
  * Tracks all known list objects, indexed by list ID.
@@ -46,6 +46,20 @@ export function items( state = {}, action ) {
 		case READER_LIST_REQUEST_SUCCESS:
 		case READER_LIST_UPDATE_SUCCESS:
 			return Object.assign( {}, state, keyBy( [ action.data.list ], 'ID' ) );
+		case READER_LIST_UPDATE_TITLE:
+			let listForTitleChange = Object.assign( {}, state[ action.listId ] );
+			if ( ! listForTitleChange ) {
+				return state;
+			}
+			listForTitleChange.title = action.title;
+			return Object.assign( {}, state, keyBy( [ listForTitleChange ], 'ID' ) );
+		case READER_LIST_UPDATE_DESCRIPTION:
+			let listForDescriptionChange = Object.assign( {}, state[ action.listId ] );
+			if ( ! listForDescriptionChange ) {
+				return state;
+			}
+			listForDescriptionChange.description = action.description;
+			return Object.assign( {}, state, keyBy( [ listForDescriptionChange ], 'ID' ) );
 		case SERIALIZE:
 			return state;
 		case DESERIALIZE:

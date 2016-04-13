@@ -12,8 +12,6 @@ import has from 'lodash/has';
  */
 import createSelector from 'lib/create-selector';
 
-var debug = require( 'debug' )( 'calypso:redux' );
-
 /**
  * Returns true if currently requesting Reader lists, or
  * false otherwise.

@@ -15,7 +15,9 @@ import {
 	READER_LISTS_RECEIVE,
 	READER_LISTS_REQUEST,
 	READER_LISTS_FOLLOW,
-	READER_LISTS_UNFOLLOW
+	READER_LISTS_UNFOLLOW,
+	READER_LIST_UPDATE_TITLE,
+	READER_LIST_UPDATE_DESCRIPTION
 } from 'state/action-types';
 
 import {
@@ -25,7 +27,9 @@ import {
 	followList,
 	unfollowList,
 	updateListDetails,
-	dismissListNotice
+	dismissListNotice,
+	updateTitle,
+	updateDescription
 } from '../actions';
 
 describe( 'actions', () => {
@@ -173,6 +177,34 @@ describe( 'actions', () => {
 			expect( spy ).to.have.been.calledWith( {
 				type: READER_LIST_DISMISS_NOTICE,
 				listId: 123
+			} );
+		} );
+	} );
+
+	describe( '#updateTitle()', () => {
+		it( 'should dispatch the right action', () => {
+			const listId = 123;
+			const newTitle = 'Banana';
+			updateTitle( listId, newTitle )( spy );
+
+			expect( spy ).to.have.been.calledWith( {
+				type: READER_LIST_UPDATE_TITLE,
+				listId: 123,
+				title: newTitle
+			} );
+		} );
+	} );
+
+	describe( '#updateDescription()', () => {
+		it( 'should dispatch the right action', () => {
+			const listId = 123;
+			const newDescription = 'Yellow is a excellent fruit colour';
+			updateDescription( listId, newDescription )( spy );
+
+			expect( spy ).to.have.been.calledWith( {
+				type: READER_LIST_UPDATE_DESCRIPTION,
+				listId: 123,
+				description: newDescription
 			} );
 		} );
 	} );

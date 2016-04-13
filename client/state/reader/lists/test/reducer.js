@@ -10,7 +10,9 @@ import deepFreeze from 'deep-freeze';
 import {
 	READER_LISTS_RECEIVE,
 	READER_LIST_UPDATE_SUCCESS,
-	READER_LIST_DISMISS_NOTICE
+	READER_LIST_DISMISS_NOTICE,
+	READER_LIST_UPDATE_TITLE,
+	READER_LIST_UPDATE_DESCRIPTION
 } from 'state/action-types';
 
 import {
@@ -52,6 +54,37 @@ describe( 'reducer', () => {
 			expect( state ).to.eql( {
 				841: { ID: 841, title: 'Hello World' },
 				413: { ID: 413, title: 'Mangos and feijoas' }
+			} );
+		} );
+
+		it( 'should update a list title', () => {
+			const original = deepFreeze( {
+				841: { ID: 841, title: 'Hello World' }
+			} );
+			const state = items( original, {
+				type: READER_LIST_UPDATE_TITLE,
+				listId: 841,
+				title: 'Bananas'
+			} );
+
+			expect( state ).to.eql( {
+				841: { ID: 841, title: 'Bananas' }
+			} );
+		} );
+
+		it( 'should update a list description', () => {
+			const original = deepFreeze( {
+				841: { ID: 841, title: 'Bananas' }
+			} );
+			const state = items( original, {
+				type: READER_LIST_UPDATE_DESCRIPTION,
+				listId: 841,
+				title: 'Bananas',
+				description: 'This is a list about fruit'
+			} );
+
+			expect( state ).to.eql( {
+				841: { ID: 841, title: 'Bananas', description: 'This is a list about fruit' }
 			} );
 		} );
 	} );
