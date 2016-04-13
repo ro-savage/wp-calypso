@@ -21,11 +21,13 @@ import DesignToolList from 'my-sites/design-tool-list';
 import SiteTitleControl from 'my-sites/site-title';
 import HeaderImageControl from 'my-sites/header-image';
 import HomePageSettings from 'my-sites/home-page-settings';
+import SiteLogoControl from 'my-sites/site-logo';
 
 const designToolsById = {
 	siteTitle: SiteTitleControl,
 	headerImage: HeaderImageControl,
 	homePage: HomePageSettings,
+	siteLogo: SiteLogoControl,
 };
 
 const DesignMenu = React.createClass( {
@@ -68,6 +70,10 @@ const DesignMenu = React.createClass( {
 			{
 				label: this.translate( 'Header Image' ),
 				value: 'headerImage',
+			},
+			{
+				label: this.translate( 'Site Logo' ),
+				value: 'siteLogo',
 			},
 			{
 				label: this.translate( 'Homepage Settings' ),
