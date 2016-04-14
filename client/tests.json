@@ -398,6 +398,9 @@
 			},
 			"plugin-autoupdate-toggle" : {
 				"test": [ "index" ]
+			},
+			"plugins-list": {
+				"test": [ "index" ]
 			}
 		},
 		"upgrades": {
