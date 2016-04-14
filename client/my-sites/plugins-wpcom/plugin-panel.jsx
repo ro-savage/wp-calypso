@@ -8,12 +8,26 @@ import { getSiteSlug } from 'state/sites/selectors';
 import InfoHeader from './info-header';
 import StandardPluginsPanel from './standard-plugins-panel';
 import PremiumPluginsPanel from './premium-plugins-panel';
+
 import BusinessPluginsPanel from './business-plugins-panel';
+import { defaultBusinessPlugins } from './default-plugins';
+
+/*
+ * Interpolate the given plugin propagating `siteSlug` value
+ */
+const linkInterpolator = siteSlug => plugin => {
+	const { supportLink: link } = plugin;
+	const supportLink = link.replace( '{siteSlug}', siteSlug );
+	return Object.assign( {}, plugin, { supportLink } );
+}
 
 export const PluginPanel = React.createClass( {
 	render() {
 		const { siteSlug } = this.props;
 		const standardPluginsLink = `/plugins/standard/${ siteSlug }`;
+
+		const interpolateLink = linkInterpolator( siteSlug );
+		const businessPlugins = defaultBusinessPlugins.map( interpolateLink );
 
 		return (
 			<div className="wpcom-plugin-panel">
@@ -23,7 +37,7 @@ export const PluginPanel = React.createClass( {
 					{ this.translate( 'View all standard plugins' ) }
 				</Card>
 				<PremiumPluginsPanel />
-				<BusinessPluginsPanel />
+				<BusinessPluginsPanel plugins={ businessPlugins } />
 			</div>
 		);
 	}

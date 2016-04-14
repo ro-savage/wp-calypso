@@ -3,6 +3,17 @@ import noop from 'lodash/noop';
 
 import Gridicon from 'components/gridicon';
 
+/**
+ * Detect if the given url is a fully formed url
+ *
+ * @param {String} url - url to check
+ * @return {Boolean} True if it's a fully formed url
+ */
+
+const isFullyFormedURL = url => {
+	return /^https?:\/\//.test( url );
+};
+
 export const BusinessPlugin = React.createClass( {
 	render() {
 		const {
@@ -11,12 +22,14 @@ export const BusinessPlugin = React.createClass( {
 			name,
 			plan,
 			onClick = noop,
-			supportLink
+			supportLink,
 		} = this.props;
+
+		const target = isFullyFormedURL( supportLink ) ? '_blank' : '_self';
 
 		return (
 			<div className="wpcom-plugins__plugin-item">
-				<a onClick={ onClick } href={ supportLink } target="_blank">
+				<a onClick={ onClick } href={ supportLink } target={ target }>
 					<div className="wpcom-plugins__plugin-icon">
 						<Gridicon { ...{ icon } } />
 					</div>
