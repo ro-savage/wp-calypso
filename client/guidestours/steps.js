@@ -11,9 +11,41 @@ import Card from 'components/card';
 import Button from 'components/button';
 import ExternalLink from 'components/external-link';
 import Gridicon from 'components/gridicon';
-import { posToCss, bullseyePositioners, getStepPosition } from './positioning';
+import { posToCss, bullseyePositioners, getStepPosition, query } from './positioning';
 
 class GuidesBasicStep extends Component {
+	removeOverlay() {
+		const { target = false } = this.props;
+		target && window.requestAnimationFrame( function() {
+			const new_target = query( '[data-tip-target=' + target.dataset.tipTarget + ']' )[0];
+			new_target && new_target.classList.remove( 'guidestours__overlay' );
+		} );
+	}
+
+	addOverlay() {
+		const { target = false } = this.props;
+		target && window.requestAnimationFrame( function() {
+			const new_target = query( '[data-tip-target=' + target.dataset.tipTarget + ']' )[0];
+			new_target && new_target.classList.add( 'guidestours__overlay' );
+		} );
+	}
+
+	componentDidMount() {
+		this.addOverlay();
+	}
+
+	componentWillUnmount() {
+		this.removeOverlay();
+	}
+
+	componentWillUpdate() {
+		this.removeOverlay();
+	}
+
+	componentDidUpdate() {
+		this.addOverlay();
+	}
+
 	render() {
 		const stepPos = getStepPosition( this.props );
 		const stepCoords = posToCss( stepPos );
