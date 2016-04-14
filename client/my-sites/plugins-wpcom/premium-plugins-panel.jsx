@@ -15,6 +15,7 @@ export const PremiumPluginsPanel = React.createClass( {
 				<SectionHeader label={ this.translate( 'Premium Plan Upgrades' ) }>
 					<Button compact primary>{ this.translate( 'Purchase' ) }</Button>
 				</SectionHeader>
+
 				<Card className="wpcom-plugins__premium-panel is-disabled">
 					<div className="wpcom-plugins__list">
 						{ plugins.map( ( { name, descriptionLink, icon, plan, description } ) =>
