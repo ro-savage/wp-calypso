@@ -11,12 +11,12 @@ export const StandardPlugin = React.createClass( {
 			icon = 'plugins',
 			name,
 			onClick = noop,
-			supportLink
+			descriptionLink
 		} = this.props;
 
 		return (
 			<div className="wpcom-plugins__plugin-item">
-				<a onClick={ onClick } href={ supportLink } target="_blank">
+				<a onClick={ onClick } href={ descriptionLink } target="_blank">
 					<div className="wpcom-plugins__plugin-icon">
 						<Gridicon { ...{ icon } } />
 					</div>
@@ -35,7 +35,7 @@ StandardPlugin.propTypes = {
 	icon: PropTypes.string,
 	name: PropTypes.string.isRequired,
 	onClick: PropTypes.func,
-	supportLink: PropTypes.string.isRequired
+	descriptionLink: PropTypes.string.isRequired
 };
 
 export default StandardPlugin;

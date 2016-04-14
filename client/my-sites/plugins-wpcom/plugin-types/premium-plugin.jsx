@@ -11,12 +11,12 @@ export const PremiumPlugin = React.createClass( {
 			name,
 			plan,
 			onClick = noop,
-			supportLink
+			descriptionLink
 		} = this.props;
 
 		return (
 			<div className="wpcom-plugins__plugin-item">
-				<a onClick={ onClick } href={ supportLink } target="_blank">
+				<a onClick={ onClick } href={ descriptionLink } target="_blank">
 					<div className="wpcom-plugins__plugin-icon">
 						<Gridicon { ...{ icon } } />
 					</div>
@@ -31,7 +31,7 @@ export const PremiumPlugin = React.createClass( {
 
 PremiumPlugin.propTypes = {
 	name: PropTypes.string.isRequired,
-	supportLink: PropTypes.string.isRequired,
+	descriptionLink: PropTypes.string.isRequired,
 	icon: PropTypes.string,
 	plan: PropTypes.string.isRequired,
 	onClick: PropTypes.func,

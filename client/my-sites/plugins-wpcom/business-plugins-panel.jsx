@@ -18,10 +18,10 @@ export const BusinessPluginsPanel = React.createClass( {
 				<Card className="wpcom-plugins__business-panel is-disabled">
 					<div className="wpcom-plugins__list">
 						{ plugins.map( (
-							{ name, supportLink, icon, plan, description }
+							{ name, descriptionLink, icon, plan, description }
 						) =>
 							<BusinessPlugin
-								{ ...{ name, key: name, supportLink, icon, plan, description } }
+								{ ...{ name, key: name, descriptionLink, icon, plan, description } }
 							/>
 						) }
 					</div>
