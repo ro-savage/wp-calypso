@@ -87,7 +87,7 @@ export function guidesTour( state = {}, action ) {
 				stepName,
 				shouldShow: action.shouldShow,
 				shouldDelay: action.shouldDelay,
-				willShow: ( action.shouldShow || state.shouldShow ) && ! action.shouldDelay,
+				shouldReallyShow: ( action.shouldShow || state.shouldShow ) && ! action.shouldDelay,
 				tour: action.tour,
 				siteId: action.siteId,
 			};
