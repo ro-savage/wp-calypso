@@ -18,7 +18,10 @@ import sitesFactory from 'lib/sites-list';
 import titleActions from 'lib/screen-title/actions';
 import get from 'lodash/get';
 import { isValidFeatureKey } from 'lib/plans';
-
+import {
+	isPremium,
+	isBusiness
+} from 'lib/products-values';
 const plans = plansFactory();
 const sites = sitesFactory();
 
@@ -49,6 +52,12 @@ export default {
 				),
 				document.getElementById( 'primary' )
 			);
+			return;
+		}
+
+		//Redirect for upgraded sites
+		if ( site && ( isPremium( site.plan ) || isBusiness( site.plan ) ) ) {
+			page.redirect( '/plans/my-plan/' + site.slug );
 			return;
 		}
 
