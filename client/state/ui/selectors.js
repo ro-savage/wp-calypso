@@ -66,12 +66,10 @@ export const getGuidesTourState = createSelector(
 		const tourState = getRawGuidesTourState( state );
 		const { shouldReallyShow, stepName = '' } = tourState;
 		const stepConfig = getToursConfig()[ stepName ] || false;
-		const foo = Object.assign( {}, tourState, {
+		return Object.assign( {}, tourState, {
 			stepConfig,
 			shouldShow: shouldReallyShow,
 		} );
-		console.log( foo );
-		return foo;
 	},
 	getRawGuidesTourState
 );
