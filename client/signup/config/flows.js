@@ -271,22 +271,35 @@ function filterFlowName( flowName ) {
 }
 
 function filterDestination( destination, dependencies, flowName ) {
-	if ( abtest( 'guidedTours' ) === 'guided' ) {
-		const tourName = 'main';
-		const disabledFlows = [ 'account', 'site-user' ];
+	return getGuidedToursDestination( destination, dependencies, flowName );
+}
 
-		if ( includes( disabledFlows, flowName ) ) {
-			return destination;
+function getGuidedToursDestination( destination, dependencies, flowName ) {
+	const guidedToursVariant = abtest( 'guidedTours' );
+	const tourName = 'main';
+	const disabledFlows = [ 'account', 'site-user', 'jetpack' ];
+	const siteSlug = dependencies.siteSlug;
+	const baseUrl = `/stats/${ siteSlug }`;
+
+	// TODO(ehg): Build the query arg properly, so we don't have problems with
+	// destinations that already have query strings in
+	function getVariantUrl( variant ) {
+		console.log( variant );
+		const external = isOutsideCalypso( destination );
+		const variantUrls = {
+			original: destination,
+			guided: external ? `${ baseUrl }?tour=${ tourName }` : `${ destination }?tour=${ tourName }`,
+			calypsoOnly: external ? baseUrl : destination,
 		}
 
-		// TODO(ehg): Build the query arg properly, so we don't have problems with
-		// destinations that already have query strings in
-		return isOutsideCalypso( destination )
-			? `/stats/${ dependencies.siteSlug }?tour=${ tourName }`
-			: `${ destination }?tour=${ tourName }`;
+		return variantUrls[ variant ] || variantUrls.original;
 	}
 
-	return destination;
+	if ( includes( disabledFlows, flowName ) || ! siteSlug ) {
+		return destination;
+	}
+
+	return getVariantUrl( guidedToursVariant );
 }
 
 export default {
